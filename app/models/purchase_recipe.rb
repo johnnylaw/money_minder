@@ -11,6 +11,9 @@ class PurchaseRecipe < ActiveRecord::Base
   
   # validates   :vendor_id, :existence => true, :allow_nil => true
   
+  def vendor_name
+    vendor && vendor.name || ''
+  end
   # def vendor
   #   outside_account
   # end

@@ -1,4 +1,13 @@
 MoneyMinder::Application.routes.draw do
+  post  'purchases' => 'purchases#create', :as => :purchases
+  get   'purchases/new' => 'purchases#new', :as => :new_purchase
+  get   'purchases/new/virtual_account/:name' => 'purchases#new_from_virtual_account', :as => :new_purchase_from_virtual_account
+
+  get   'virtual_accounts' => 'virtual_accounts#index', :as => :virtual_accounts
+  
+  get   'expected_purchases' => 'expected_purchases#index', :as => :expected_purchases
+  get   'purchase/new/expected_purchase/:id' => 'purchases#new_for_expected_purchase', :as => :new_purchase_for_expected_purchase
+  delete  'expected_purchase/:id' => 'expected_purchase#dismiss', :as => :expected_purchase
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
