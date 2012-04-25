@@ -14,7 +14,10 @@ class CreateRecipeVirtualAccountPortions < ActiveRecord::Migration
         t.timestamps
       end
     end
-
+    
+    add_index :purchase_recipe_virtual_portions, [:purchase_recipe_id, :virtual_account_id], :unique => true, :name => 'virtual_portions_per_purchase_recipe'
+    add_index :revenue_recipe_virtual_portions,  [:revenue_recipe_id,  :virtual_account_id], :unique => true, :name => 'virtual_portions_per_revenue_recipe'
+    
     if ActiveRecord::Base.connection.adapter_name == 'PostgreSQL'
       execute %{ ALTER TABLE purchase_recipe_virtual_portions ADD FOREIGN KEY (purchase_recipe_id) REFERENCES purchase_recipes(id) }
       execute %{ ALTER TABLE revenue_recipe_virtual_portions ADD FOREIGN KEY (revenue_recipe_id) REFERENCES revenue_recipes(id) }

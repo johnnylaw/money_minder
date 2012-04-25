@@ -13,5 +13,9 @@ class VirtualAccount < ActiveRecord::Base
       VirtualTransfer.from_account(self).sum(:cents) - VirtualPurchase.from_account(self).sum(:cents)
     )
   end
+  
+  def to_param
+    name
+  end
 end
   

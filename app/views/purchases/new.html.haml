@@ -58,7 +58,7 @@
     $.get('#{expected_purchases_path}.json', function(json) {
       if(json.length) $('#expected_purchases').html('');
       else $('#expected_purchases p.subtitle').html('There are no expected transactions.');
-      var link, name, subtitle, payee, amount, due_in, delete_button;
+      var link, name, subtitle, vendor, amount, due_in, delete_button;
       $.each(json, function(i, pur) { 
         link = $('<a>').addClass('icon').attr('href', pur['new_purchase_url']);
         name = $('<p>').addClass('label').html(pur['name']);
@@ -69,11 +69,11 @@
         } else {
           due_in = $('<span>').html('(' + pur['weekday'] + ')')
         }
-        payee = pur['payee_name'];
-        if(payee.length) payee = ' to ' + payee;
-        amount = '$' + pur['amount'].replace(/([\d]{2})$/, '.$1');
+        vendor = pur['vendor_name'];
+        if(vendor.length) vendor = ' to ' + vendor;
+        amount = pur['amount']['currency']['symbol'] + pur['amount']['cents'].toString().replace(/([\d]{2})$/, '.$1')
         if(amount.length > 6) amount = amount.replace(/\.\d*$/, '');
-        subtitle = $('<p>').addClass('subtitle').html(amount + payee);
+        subtitle = $('<p>').addClass('subtitle').html(amount + vendor);
         link.appendTo('#expected_purchases');
         delete_button.appendTo(link);
         delete_button.click(function(e) {

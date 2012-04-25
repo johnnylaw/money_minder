@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(:version => 20120423024800) do
     t.datetime "updated_at",         :null => false
   end
 
+  add_index "purchase_recipe_virtual_portions", ["purchase_recipe_id", "virtual_account_id"], :name => "virtual_portions_per_purchase_recipe", :unique => true
+
   create_table "purchase_recipes", :force => true do |t|
     t.string   "name",                                                             :null => false
     t.integer  "spill_over_virtual_account_id"
@@ -112,6 +114,8 @@ ActiveRecord::Schema.define(:version => 20120423024800) do
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
   end
+
+  add_index "revenue_recipe_virtual_portions", ["revenue_recipe_id", "virtual_account_id"], :name => "virtual_portions_per_revenue_recipe", :unique => true
 
   create_table "revenue_recipes", :force => true do |t|
     t.string   "name",                                                             :null => false

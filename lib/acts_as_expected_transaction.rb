@@ -14,6 +14,10 @@ module ActsAsExpectedTransaction
         where(:transaction_recipe_id => recipe.id).where(:scheduled_on => date).first ||
           create(:transaction_recipe_id => recipe.id, :scheduled_on => date, :scheduled_for_hour => recipe.hour)
       end
+      
+      def complete
+        update_attribute(:is_complete, true)
+      end
     end
   end
 

@@ -3,12 +3,12 @@
   = "(#{@expected_purchase.recipe.name})" if @expected_purchase
 %p== Virtual account balance: $#{@virtual_account.balance}
 
-= form_for @purchase, :url => purchases_path do |pur|
-
+= form_for @purchase do |pur|
+  = pur.hidden_field :expected_purchase_id
   = pur.fields_for :virtual_purchases do |vt|
   
     %div.erase_all
-      = vt.text_field :cents #, :type => :number, :step => '0.01', :min => '0.00', :placeholder => 'Amount'
+      = vt.text_field :amount, :type => :number, :step => '0.01', :min => '0.00', :placeholder => 'Amount'
       %span.erase_all X
     
     %div
@@ -21,9 +21,9 @@
       
     :javascript
       $(function() {
-        var available_payees = #{@payees.map(&:name).to_json.html_safe};
+        var available_vendors = #{@vendors.map(&:name).to_json.html_safe};
         $('#purchase_vendor_name').autocomplete({
-          source: available_payees
+          source: available_vendors
         });
         $('span.erase_all').bind('click', function() { $(this).parent().find('input').val('').focus(); });
         $('div.erase_all').hover(function() {  });

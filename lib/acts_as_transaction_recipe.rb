@@ -29,6 +29,11 @@ module ActsAsTransactionRecipe
       belongs_to  :spill_over_virtual_account, :class_name => 'VirtualAccount'
       has_many    :virtual_accounts, :through => :virtual_portions
       belongs_to  :default_inside_account, :class_name => 'Account'
+      composed_of :amount,
+        :class_name => "Money",
+        :mapping => [%w(cents cents)],
+        :constructor => Proc.new { |cents| Money.new(cents || 0) },
+        :converter => Proc.new { |value| value.respond_to?(:to_money) ? value.to_money : raise(ArgumentError, "Can't convert #{value.class} to Money") }
       
       def self.find_or_create_by_name(attrs)
         result = find_by_name(attrs[:name])
