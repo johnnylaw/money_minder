@@ -51,6 +51,7 @@
   a { text-decoration: none; color: black; cursor: pointer; }
   a:hover { background-color: #cccccc; }
   a button { height: 70%; margin-top: .7em; float: left; font-weight: bold; color: red; }
+  .weak { font-size: .8em; opacity: .5; font-weight: normal; }
 
 
 :javascript
@@ -62,13 +63,14 @@
       $.each(json, function(i, pur) { 
         link = $('<a>').addClass('icon').attr('href', pur['new_purchase_url']);
         name = $('<p>').addClass('label').html(pur['name']);
-        if(pur['is_promised']) name.addClass('danger');
-        delete_button = $('<button>').attr('id', 'expected_purchase_dismiss_' + pur['id']).html('Dismiss');
         if(pur['is_promised']) {
-          due_in = $('<span>').html('(Due ' + pur['due_in'] + ')');
+          due_phrase = 'Due ' + pur['due_in'];
+          name.addClass(pur['status']);
         } else {
-          due_in = $('<span>').html('(' + pur['weekday'] + ')')
+          due_phrase = pur['due_in'];
         }
+        delete_button = $('<button>').attr('id', 'expected_purchase_dismiss_' + pur['id']).html('Dismiss');
+        due_in = $('<span class="weak">').html('(' + due_phrase + ')');
         vendor = pur['vendor_name'];
         if(vendor.length) vendor = ' to ' + vendor;
         amount = pur['amount']['currency']['symbol'] + pur['amount']['cents'].toString().replace(/([\d]{2})$/, '.$1')

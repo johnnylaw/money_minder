@@ -1,6 +1,6 @@
 class ExpectedPurchasesController < ApplicationController
   def index
-    @expected_purchases = ExpectedPurchase.all
+    @expected_purchases = ExpectedPurchase.outstanding
     respond_to do |format|
       format.html {}
       format.json { render :json => jsonified_expected_purchases }
@@ -19,10 +19,12 @@ class ExpectedPurchasesController < ApplicationController
   def jsonified_expected_purchases
     @expected_purchases.map{ |pur| pur.attributes.merge(
       'due_in' => distance_of_time_in_words_until(pur.scheduled_on, pur.scheduled_for_hour),
+      'status' => pur.status,
       'new_purchase_url' => new_purchase_from_expected_purchase_path(pur),
-      'weekday' => pur.scheduled_on.strftime('%A'),
+      # 'weekday' => pur.scheduled_on.strftime('%a, %b %d'),
+      # 'due_in' => pur.scheduled_on.strftime('%a, %b %d'),
       'dismiss_url' => expected_purchase_path(pur),
-      'is_promised' => pur.recipe.is_promised,
+      'is_promised' => pur.recipe.is_promised?,
       'name' => pur.recipe.name, 'vendor_name' => pur.recipe.vendor_name, 
       'amount' => pur.recipe.amount
     ) }.to_json
@@ -30,7 +32,11 @@ class ExpectedPurchasesController < ApplicationController
   
   def distance_of_time_in_words_until(date, hour)
     seconds = date.to_time + hour.hours - Time.now
-    words = ActionView::Base.new.distance_of_time_in_words(seconds)
+    #TODO: put this somewhere else and fixe the today/tomorrow/yesterday thing; not working at all
+    return 'today' if date == Date.today
+    return 'tomorrow' if date == Date.tomorrow
+    return 'yesterday' if date == Date.yesterday
+    words = ActionView::Base.new.distance_of_time_in_words(seconds).sub(/about /, '~')
     if seconds < 0
       return "#{words} ago"
     else
