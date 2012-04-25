@@ -8,7 +8,7 @@ module ActsAsExpectedTransaction
   
   def self.included(base)
     base.class_eval do
-      default_scope where(:is_complete => false).order('scheduled_on desc, scheduled_for_hour desc')
+      default_scope order('scheduled_on desc, scheduled_for_hour asc')
       
       def self.find_or_create_by_recipe_and_date(recipe, date)
         where(:transaction_recipe_id => recipe.id).where(:scheduled_on => date).first ||

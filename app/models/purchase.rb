@@ -1,8 +1,8 @@
 class Purchase < ActiveRecord::Base
   belongs_to  :vendor, :autosave => true, :validate => true
   belongs_to  :account_from, :class_name => 'Account'
+  belongs_to  :expected_purchase
   has_many    :virtual_purchases
-  attr_reader :expected_purchase_id
   
   accepts_nested_attributes_for :virtual_purchases
   before_save :process_expected_purchase, :if => proc { |p| p.expected_purchase_id }
@@ -40,21 +40,6 @@ class Purchase < ActiveRecord::Base
     virtual_purchases.build(:account_from => account_from, :cents => cents)
   end
   
-  def expected_purchase
-    @expected_purchase || ExpectedPurchase.find_by_id(@expected_purchase_id)
-  end
-
-  def expected_purchase=(ep)
-    raise ArgumentError "Cannot coerce #{ep.class} into ExpectedPurchase" unless ep.is_a? ExpectedPurchase
-    @expected_purchase = ep
-    @expected_purchase_id = ep.id
-  end
-  
-  def expected_purchase_id=(arg)
-    return if arg.empty?
-    @expected_purchase_id = arg.to_i
-  end
-  
   def vendor_name
     vendor && vendor.name || ''
   end
@@ -79,7 +64,6 @@ class Purchase < ActiveRecord::Base
         subtract_amount_from_corresponding_virtual_purchase(overage, corresponding_virtual_purchases.first)
       end
     end
-    mark_expected_purchase_as_complete
   end
   
   def add_amount_to_spill_over_virtual_purchase(overage)
@@ -96,10 +80,5 @@ class Purchase < ActiveRecord::Base
     
     virtual_purchases.select{ |vp| vp.account_from == spill_over_account }.first ||
       virtual_purchases.build(:account_from => spill_over_account, :amount => 0)
-  end
-  
-  def mark_expected_purchase_as_complete
-    exp_pur = ExpectedPurchase.find_by_id(expected_purchase_id)
-    exp_pur.complete unless exp_pur.nil?
   end
 end

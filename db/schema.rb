@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120423024800) do
+ActiveRecord::Schema.define(:version => 20120425013800) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name",                                  :null => false
@@ -88,12 +88,13 @@ ActiveRecord::Schema.define(:version => 20120423024800) do
   end
 
   create_table "purchases", :force => true do |t|
-    t.integer  "vendor_id",       :null => false
-    t.integer  "account_from_id", :null => false
+    t.integer  "vendor_id",            :null => false
+    t.integer  "account_from_id",      :null => false
     t.string   "memo"
-    t.datetime "executed_at",     :null => false
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "executed_at",          :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.integer  "expected_purchase_id"
   end
 
   add_index "purchases", ["executed_at"], :name => "index_purchases_on_executed_at"
@@ -136,12 +137,13 @@ ActiveRecord::Schema.define(:version => 20120423024800) do
   end
 
   create_table "revenues", :force => true do |t|
-    t.integer  "account_to_id", :null => false
-    t.integer  "customer_id",   :null => false
+    t.integer  "account_to_id",       :null => false
+    t.integer  "customer_id",         :null => false
     t.string   "memo"
-    t.datetime "executed_at",   :null => false
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "executed_at",         :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "expected_revenue_id"
   end
 
   add_index "revenues", ["executed_at"], :name => "index_revenues_on_executed_at"
@@ -173,8 +175,10 @@ ActiveRecord::Schema.define(:version => 20120423024800) do
     t.string   "memo"
     t.integer  "cents"
     t.datetime "executed_at"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.integer  "expected_purchase_id"
+    t.integer  "expected_revenue_id"
   end
 
   add_index "transaction_template", ["executed_at"], :name => "index_transaction_template_on_executed_at"
