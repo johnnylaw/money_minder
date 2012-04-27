@@ -20,3 +20,25 @@ module ActsAsTransaction
 end
 
 ActiveRecord::Base.send(:extend, ActsAsTransaction::ActiveRecordBaseExt)
+
+# Possible refactor
+# :purchase
+  # has_many :virtual_transactions, :foreign_key => :purchase_id, :class_name => 'VirtualPurchase'
+  
+# :transfer
+# :revenue
+  # has_many :virtual_transactions, :foreign_key => :revenue_id, :class_name => 'VirtualRevenue'
+  
+# :virtual_purchase
+  # belongs_to :transaction, :class_name => 'Purchase', :foreign_key => :purchase_id
+  
+# :virtual_transfer
+
+# :virtual_revenue
+  # belongs_to :transaction, :class_name => 'Revenue', :foreign_key => :revenue_id
+  
+# class_name = self.class.to_s
+# class_name_instance = class_name.underscore
+# if class_name.match? /^Virtual/
+  # assoc_transaction_class_name = class_name.sub(/^Virtual/, '')
+  # belongs_to :transaction, :class_name = assoc_transaction_class_name, :foreign_key => 

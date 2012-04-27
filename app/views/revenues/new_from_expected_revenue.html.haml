@@ -1,0 +1,83 @@
+%header
+  %h1== #{@expected_revenue.recipe.name}
+  %p== for #{@expected_revenue.scheduled_on.strftime('%b %d, %Y')}
+
+= form_for @revenue do |f|
+
+  = f.hidden_field :expected_revenue_id
+  
+  %table
+    %tr.total_amount
+      %td.label
+        = f.label :total_amount
+        %br
+        %span.info
+      %td.symbol $
+      %td.amount= f.text_field :total_amount, :class => :amount
+
+    - @revenue.virtual_revenues.each do |virtual_revenue|
+      = f.fields_for :virtual_revenues, virtual_revenue do |vr|
+        %tr.virtual_amount
+          %td.label
+            = vr.label :amount, virtual_revenue.account_to.name
+            %br
+            %span.info
+          %td.symbol $
+          %td.amount= vr.text_field :amount, :class => :amount
+          = vr.hidden_field :account_to_id
+          
+    = f.fields_for :virtual_revenues, @revenue.spill_over_virtual_revenue do |vr|
+      %tr.spill_over_amount
+        %td.label
+          = vr.label :amount, @revenue.spill_over_virtual_revenue.account_to.name
+          %br
+          %span.info
+        %td.symbol $
+        %td.amount= vr.text_field :amount, :disabled => true, :class => :amount
+          
+:css
+  td { text-align: right; padding: .3em 0; }
+  td.label { width: 50%; padding-right: 1.2em; }
+  td.symbol { width: .3em; font-size: 1.2em; padding-left: 0; padding-right: 0; }
+  td.amount { padding: 0; text-align: left; width: 40%; }
+  td.amount input { text-align: right; }
+  td.label span.info { display: block; padding-right: .2em; font-size: .8em; color: red; }
+
+:javascript
+  $(function() {
+    record_original_amounts();
+    //$.fn.centsValue(function(arg) {
+    //  if(arg) {
+    //    $(this).val(arg.toString().replace(/([\d]{2})$/, '.$1'));
+    //  } else {
+    //    parseInt($(this).val.replace(/\./));
+    //  }
+    //});
+    $('td.amount input').bind('change keyup', function() { recalculate_totals(); })
+    function recalculate_totals() {
+      var total_amount = parseInt($('tr.total_amount input').val().replace(/\./, '')); //$('tr.total_amount input').centsValue();
+      var total_of_virtuals = sum_of_virtual_amounts();
+      $('tr.spill_over_amount input').val((total_amount - total_of_virtuals).toString().replace(/([\d]{2})$/, '.$1'));
+    }
+    function sum_of_virtual_amounts() {
+      var mySum = 0;
+      var initialValueInfoSpan;
+      $('tr.virtual_amount input.amount').each(function() {
+        mySum += parseInt($(this).val().replace(/\./, ''));
+      });
+      $('input.amount').each(function() {
+        initialValueInfoSpan = $(this).parents('tr').find('td.label span.info');
+        if($(this).val() != $(this).attr('attr-original')) {
+          initialValueInfoSpan.html('(was ' + $(this).attr('attr-original') + ')');
+        } else {
+          $(this).parents('tr').find('td.label span.info').html('');
+        }
+      });
+      return mySum;
+    }
+    function record_original_amounts() {
+      $('input').each(function() {
+        $(this).attr('attr-original', $(this).val());
+      });
+    }
+  });
