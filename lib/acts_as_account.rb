@@ -18,28 +18,11 @@ module ActsAsAccount
     acct_type = acctType.underscore
     
     base.class_eval do
-      has_many  :expense_transactions, :class_name => "#{acctType}Transaction", 
-                :foreign_key => :account_from_id
-      has_many  :revenue_transactions, :class_name => "#{acctType}Transaction",
-                :foreign_key => :account_to_id
-
       default_scope order(:name)
       
       validates :name, :presence => true, :uniqueness => true
     end
 
-  end
-  
-  def expenses
-    expense_transactions.empty? ? ZERO : expense_transactions.map(&:money).sum
-  end
-
-  def revenues
-    revenue_transactions.empty? ? ZERO : revenue_transactions.map(&:money).sum
-  end
-
-  def balance
-    revenues - expenses
   end
   
   def attributes

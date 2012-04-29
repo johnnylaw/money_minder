@@ -59,7 +59,7 @@ class Purchase < ActiveRecord::Base
       corresponding_virtual_purchases = virtual_purchases.select{ |vp| vp.account_from == virtual_portion.virtual_account }
       approved_amount = virtual_portion.amount    
       actual_amount = corresponding_virtual_purchases.map(&:amount).sum
-      if (overage = actual_amount - approved_amount ) > Money.new(0)
+      if (overage = actual_amount - approved_amount ) > Money.new(0) && !expected_purchase.recipe.spill_over_virtual_account.nil?
         add_amount_to_spill_over_virtual_purchase(overage)
         subtract_amount_from_corresponding_virtual_purchase(overage, corresponding_virtual_purchases.first)
       end
