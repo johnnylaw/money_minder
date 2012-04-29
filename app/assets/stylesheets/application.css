@@ -13,7 +13,7 @@
 */
   body {
     font-family: Helvetica, Arial, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
   }
   div.erase_all { position: relative; }
   div.erase_all span.erase_all { display: none; }
@@ -28,8 +28,17 @@
   }
   h1 {
     margin: 0;
-    font-size: 1.2em;
+    font-size: 1.3em;
   }
+  h1 a { font-size: .7em; color: blue; }
+  h2 {
+    font-size: 1.1em;
+    padding: 1px 5px;
+    margin: 0;
+    background-color: #6677cc;
+    color: white;
+  }
+  
   p {
     margin: 0 0 1em 0;
   }
@@ -51,3 +60,4 @@
     -webkit-box-shadow: 1px 1px 1px #fff;
     -webkit-border-radius: 0.2em;
   }
+  .clear { clear: both; }
