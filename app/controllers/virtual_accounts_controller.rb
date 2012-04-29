@@ -8,11 +8,16 @@ class VirtualAccountsController < ApplicationController
     end
   end
   
+  def show
+    @virtual_account = VirtualAccount.find_by_name(params[:name])
+  end
+  
   private
   
   def jsonified_virtual_accounts
     @virtual_accounts.map{ |acct| acct.attributes.merge( 
-      'balance' => acct.balance.to_s, 'new_purchase_href' => new_purchase_from_virtual_account_path(acct)
+      'balance' => acct.balance.to_s, 'new_purchase_href' => new_purchase_from_virtual_account_path(acct),
+      'href'  => virtual_account_path(acct)
     ) }.to_json
   end
 end

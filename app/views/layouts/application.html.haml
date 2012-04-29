@@ -8,15 +8,8 @@
     %script{:src => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/jquery-ui.min.js"}
     = csrf_meta_tags
     %meta{ :name => "viewport", :content => 'width=device-width', 'initial-scale' => '1', 'maximum-scale' => '1', 'user-scalable' => '0' }
-    :css
-      body { 
-        width: 320px;
-        padding: 0 5px;
-        margin: auto; 
-        font-family: Helvetica, Arial, sans-serif; 
-        font-size: 17px;
-      }
-
+    = "<style>body{ width: 600px; margin: auto; }</style>".html_safe if @iphone.nil? 
+    
   %body
     %p.notice= notice
     %p.alert= alert

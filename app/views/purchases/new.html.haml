@@ -7,13 +7,6 @@
   %p.subtitle Loading virtual accounts
   
 :css  
-  h2 {
-    font-size: 1.1em;
-    padding: 1px 5px;
-    margin: 0;
-    background-color: #6677cc;
-    color: white;
-  }
   a.icon { 
     display: block;
     width: 100%;
@@ -96,13 +89,15 @@
     $.get('#{virtual_accounts_path}.json', function(json) {
       if(json.length) $('#virtual_accounts').html('');
       else $('#virtual_accounts p.subtitle').html('There are no accounts to show.');
-      var link, name, subtitle;
+      var link, name, subtitle, account_link;
       $.each(json, function(i, acct) { 
         link = $('<a>').addClass('icon').attr('href', acct['new_purchase_href']);
+        account_link = $('<a>').attr('href', acct['href']);
         name = $('<p>').addClass('label').html(acct['name']);
         subtitle = $('<p>').addClass('subtitle').html('$' + acct['balance']);
         link.appendTo('#virtual_accounts');
-        name.appendTo(link);
+        account_link.appendTo(link);
+        name.appendTo(account_link);
         subtitle.appendTo(link);
       });
     });

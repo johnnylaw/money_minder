@@ -1,12 +1,11 @@
 %header
-  %h1== #{@expected_revenue.recipe.name}
-  %p== for #{@expected_revenue.scheduled_on.strftime('%b %d, %Y')}
+  %h1 New Revenue Transactions
 
 = form_for @revenue do |f|
 
-  = f.hidden_field :expected_revenue_id
-  = f.hidden_field :customer_id
-  = f.hidden_field :account_to_id
+  = f.select :customer_id, @customers.map{ |c| [c.name, c.id] }
+  = f.select :account_to_id, @holding_accounts.map{ |acc| [acc.name, acc.id] }
+  = f.text_field :executed_at
   
   %table
     %tr.total_amount
@@ -20,23 +19,10 @@
     - @revenue.virtual_revenues.each do |virtual_revenue|
       = f.fields_for :virtual_revenues, virtual_revenue do |vr|
         %tr.virtual_amount
-          %td.label
-            = vr.label :amount, virtual_revenue.account_to.name
-            %br
-            %span.info
+          %td.label= vr.select :account_to_id, @virtual_accounts.map{ |va| [va.name, va.id] }
           %td.symbol $
           %td.amount= vr.text_field :amount, :class => :amount
-          = vr.hidden_field :account_to_id
           
-    = f.fields_for :virtual_revenues, @revenue.spill_over_virtual_revenue do |vr|
-      %tr.spill_over_amount
-        %td.label
-          = vr.label :amount, @revenue.spill_over_virtual_revenue.account_to.name
-          %br
-          %span.info
-        %td.symbol $
-        %td.amount= vr.text_field :amount, :disabled => true, :class => :amount
-        
     %tr.submit
       %td
       %td

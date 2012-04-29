@@ -1,0 +1,61 @@
+%h1 Accounts
+%h2 Physical Accounts
+%section#accounts
+  - @accounts.each do |acct|
+  
+    %a.icon{ :href => account_path(acct) }
+      %p.label= acct.name
+      %p.subtitle== $#{acct.balance}
+      
+  .clear
+  
+%h2 Virtual Accounts
+
+%section#virtual_accounts
+  - @virtual_accounts.each do |acct|
+    
+    %a.icon{ :href => virtual_account_path(acct) }
+      %p.label= acct.name
+      %p.subtitle== $#{acct.balance}
+
+:css  
+  a.icon { 
+    display: block;
+    float: left;
+    width: 146px;
+    height: 55px;
+    margin: 1px;
+    border: 1px solid gray;
+    border-radius: .5em;
+    text-align: left;
+  }
+  p {
+    margin: 0.5em 0;
+    font-size: .9em;
+  }
+  a.icon p {
+    margin: 0;
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+  p.label {
+    font-weight: bold;
+    padding-left: 5px;
+  }
+  p.label span {
+    padding-left: .2em;
+    font-size: .8em;
+  }
+  .danger {
+    color: red;
+  }
+  p.subtitle {
+    font-weight: normal;
+    font-size: 0.9em;
+    color: gray;
+    padding-left: 5px;
+  }
+  a { text-decoration: none; color: black; cursor: pointer; }
+  a:hover { background-color: #cccccc; }
+  a button { height: 70%; margin-top: .7em; float: left; font-weight: bold; color: red; }
+  .weak { font-size: .8em; opacity: .5; font-weight: normal; }

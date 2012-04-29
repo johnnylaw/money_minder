@@ -2,12 +2,17 @@ MoneyMinder::Application.routes.draw do
   post  'purchases' => 'purchases#create', :as => :purchases
   post  'expected_purchase/:id/purchases' => 'purchases#create_from_expected_purchase', :as => :expected_purchase_purchases
   get   'purchases/new' => 'purchases#new', :as => :new_purchase
+  
+  get   'accounts' => 'accounts#index', :as => :accounts
+  get   'accounts/:name' => 'accounts#show', :as => :account
 
+  get   'virtual_accounts/:name' => 'virtual_accounts#show', :as => :virtual_account
   get   'virtual_account/:name/purchases/new' => 'purchases#new_from_virtual_account', :as => :new_purchase_from_virtual_account
   get   'expected_purchase/:id/purchase/new' => 'purchases#new_from_expected_purchase', :as => :new_purchase_from_expected_purchase
 
   get   'expected_revenue/:id/revenue/new' => 'revenues#new_from_expected_revenue', :as => :new_revenue_from_expected_revenue
   post  'revenues' => 'revenues#create', :as => :revenues
+  get   'revenues/new' => 'revenues#new', :as => :new_revenue
   # post  'expected_revenue/:id/revenues' => 'revenues#create_from_expected_revenue', :as => :expected_revenue_revenues
 
   get   'virtual_accounts' => 'virtual_accounts#index', :as => :virtual_accounts

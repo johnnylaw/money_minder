@@ -1,0 +1,28 @@
+%h1
+  = @account.name
+
+%table
+  %tr
+    %th Date
+    %th Description
+    %th Amount
+    %th Balance
+  - @account.transactions.each_with_index do |trans, i|
+    %tr{ :class => cycle('odd', 'even') }
+      %td.date= trans.executed_at.strftime('%m/%d')
+      %td.description= transaction_description(trans, @account.id)
+      %td.amount= display_amount(trans, @account.id)
+      %td.balance= @account.running_balances[i]
+      
+
+      
+      
+:css
+  table { border-collapse: collapse; width: 100%; }
+  tr.odd { background-color: #ccccee; }
+  td { border: 1px solid black; }
+  td.description span.title { font-weight: bold; }
+  td.description span.subtitle { opacity: .7; font-size: .9em; }
+  td.amount, td.balance { text-align: right; }
+  span.positive { padding-right: .4em; }
+  span.negative { color: red; }
