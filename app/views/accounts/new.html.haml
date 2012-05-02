@@ -1,0 +1,26 @@
+%h2== New#{@account.class.to_s.gsub(/([A-Z])/, ' \1')}
+
+= form_for @account do |f|
+  %div
+    = f.text_field :name, :placeholder => 'Name'
+  
+  - if @account.respond_to? :is_spending
+    %div
+      = f.label :is_spending, 'Spending?', :class => 'checkbox'
+      = f.check_box :is_spending, :class => 'checkbox'
+
+  - if @account.respond_to? :is_holding
+    %div
+      = f.label :is_holding, 'Holding?', :class => 'checkbox'
+      = f.check_box :is_holding, :class => 'checkbox'
+    
+  - if @account.respond_to? :holding_account_id
+    %div
+      = f.select :holding_account_id, @holding_accounts.map{ |a| [a.name, a.id] }, :include_blank => '- Select holding account -'
+    
+  %div
+    = f.label :initial_balance
+    = f.text_field :initial_balance, :type => :number, :step => '0.01', :min => '0.00', :placeholder => 'Initial balance'
+    
+  %div
+    = f.submit

@@ -11,15 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120425013800) do
+ActiveRecord::Schema.define(:version => 20120430010835) do
 
   create_table "accounts", :force => true do |t|
-    t.string   "name",                                  :null => false
-    t.boolean  "is_spending",        :default => false
-    t.boolean  "is_holding",         :default => false
+    t.string   "name",                                        :null => false
+    t.boolean  "is_spending",              :default => false
+    t.boolean  "is_holding",               :default => false
     t.integer  "holding_account_id"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.integer  "initial_balance_in_cents", :default => 0,     :null => false
   end
 
   create_table "customers", :force => true do |t|
@@ -202,10 +203,11 @@ ActiveRecord::Schema.define(:version => 20120425013800) do
   end
 
   create_table "virtual_accounts", :force => true do |t|
-    t.string   "name",                        :null => false
+    t.string   "name",                                       :null => false
     t.integer  "primary_spending_account_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.integer  "initial_balance_in_cents",    :default => 0, :null => false
   end
 
   add_index "virtual_accounts", ["name"], :name => "index_virtual_accounts_on_name", :unique => true

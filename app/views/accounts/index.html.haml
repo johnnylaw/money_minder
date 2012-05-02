@@ -1,5 +1,9 @@
 %h1 Accounts
-%h2 Physical Accounts
+%h2 
+  Physical Accounts
+  &nbsp;
+  = link_to '+', new_account_path
+  
 %section#accounts
   - @accounts.each do |acct|
   
@@ -9,7 +13,10 @@
       
   .clear
   
-%h2 Virtual Accounts
+%h2 
+  Virtual Accounts
+  &nbsp;
+  = link_to '+', new_virtual_account_path
 
 %section#virtual_accounts
   - @virtual_accounts.each do |acct|

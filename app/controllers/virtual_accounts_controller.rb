@@ -9,7 +9,15 @@ class VirtualAccountsController < ApplicationController
   end
   
   def show
-    @virtual_account = VirtualAccount.find_by_name(params[:name])
+    @account = VirtualAccount.find_by_name(params[:name])
+    
+    render 'accounts/show'
+  end
+  
+  def new
+    @account = VirtualAccount.new
+    
+    render 'accounts/new'
   end
   
   private
