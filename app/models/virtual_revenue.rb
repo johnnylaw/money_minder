@@ -8,6 +8,10 @@ class VirtualRevenue < ActiveRecord::Base
   
   scope     :to_account,    lambda{ |acct| where(:account_to_id => acct.id) }
   
+  def inside_account
+    account_to
+  end
+  
   def executed_at
     revenue.executed_at
   end

@@ -16,6 +16,13 @@ class RevenuesController < ApplicationController
     # raise @expected_revenue.unused_virtual_accounts.inspect
   end
   
+  def show
+    @transaction = Revenue.find(params[:id])
+    @virtual_transactions = @transaction.virtual_revenues
+    
+    render 'purchases/show'
+  end
+  
   def create
     @revenue = Revenue.new(params[:revenue])
     # @revenue.executed_at = Time.parse('2012-03-28 00:00:00') # put in as a momentary band-aid

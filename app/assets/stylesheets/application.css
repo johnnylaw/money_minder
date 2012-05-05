@@ -38,7 +38,7 @@
     background-color: #6677cc;
     color: white;
   }
-  
+  h2 a { color: inherit; }
   p {
     margin: 0 0 1em 0;
   }
@@ -49,10 +49,10 @@
     width: 90%;
     height: 1.4em;
     font-size: 1.4em;
-    -webkit-appearance: none;
     -webkit-box-shadow: 1px 1px 1px #fff;
     -webkit-border-radius: 0.2em;
   }
+  label.checkbox, input.checkbox { display: inline-block; width: auto; }
   select {
     width: 97%;
     height: 1.8em;
@@ -60,4 +60,13 @@
     -webkit-box-shadow: 1px 1px 1px #fff;
     -webkit-border-radius: 0.2em;
   }
+  table { border-collapse: collapse; width: 100%; }
+  tr.even { background-color: #d7d7ee; }
+  tr:hover { background-color: #ffffdd; cursor: pointer; }
+  td.description span.title { font-weight: bold; }
+  td.description span.subtitle { opacity: .7; font-size: .9em; }
+  td.amount, td.balance { text-align: right; }
+  span.positive { padding-right: .4em; }
+  span.negative { color: red; }
   .clear { clear: both; }
+  

@@ -1,0 +1,29 @@
+%table
+  %tr.transaction
+    %td.date= @transaction.executed_at.strftime('%m/%d')
+    %td.description= transaction_title_span(@transaction)
+    %td.description= transaction_subtitle_span(@transaction)
+
+%h2 Virtual portions
+%table.virtual_portions
+  - @virtual_transactions.each do |trans|
+    %tr{ :class => cycle('odd', 'even') }
+      %td.description= trans.inside_account.name
+      %td.amount= display_amount(trans)
+
+  %tr{ :class => cycle('odd', 'even') }
+    %td
+      %strong== TOTAL (#{display_inside_account_name(@transaction)})
+    %td.amount= display_amount(@transaction)
+      
+      
+:css
+  h2 { margin-top: 1em; }
+  th { text-align: left; }
+  tr.transaction { background-color: white; cursor: auto; }
+  td { border: none; }
+  section.virtual_transactions { width: 250px; float: right; }
+  section.virtual_transactions table { }
+  h2 { width: 290px; }
+  table.virtual_portions { width: 290px; }
+  table.virtual_portions td { padding: .5em .2em; }

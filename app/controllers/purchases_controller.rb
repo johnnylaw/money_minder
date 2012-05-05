@@ -3,6 +3,15 @@ class PurchasesController < ApplicationController
   def new
   end
   
+  def show
+    @transaction = Purchase.find(params[:id])
+    @virtual_transactions = @transaction.virtual_purchases
+    respond_to do |format|
+      format.html {}
+      format.js { render :partial => 'virtual_transactions' }
+    end
+  end
+  
   def new_from_virtual_account
     @virtual_account = VirtualAccount.find_by_name(params[:name])
     @spending_accounts = Account.spending_accounts

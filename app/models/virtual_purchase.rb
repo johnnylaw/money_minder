@@ -8,6 +8,10 @@ class VirtualPurchase < ActiveRecord::Base
 
   scope     :from_account, lambda{ |acct| where(:account_from_id => acct.id) }
   
+  def inside_account
+    account_from
+  end
+  
   def executed_at
     purchase.executed_at
   end
