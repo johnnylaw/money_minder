@@ -12,6 +12,7 @@ MoneyMinder::Application.routes.draw do
   get   'accounts/:name' => 'accounts#show', :as => :account
 
   get   'virtual_accounts' => 'virtual_accounts#index', :as => :virtual_accounts
+  post  'virtual_accounts' => 'virtual_accounts#create'
   get   'virtual_accounts/new' => 'virtual_accounts#new', :as => :new_virtual_account
   get   'virtual_accounts/:name' => 'virtual_accounts#show', :as => :virtual_account
   get   'virtual_account/:name/purchases/new' => 'purchases#new_from_virtual_account', :as => :new_purchase_from_virtual_account
@@ -25,6 +26,9 @@ MoneyMinder::Application.routes.draw do
   post  'revenues' => 'revenues#create', :as => :revenues
   get   'revenues/:id'  => 'revenues#show', :as => :revenue
   get   'revenues/new' => 'revenues#new', :as => :new_revenue
+  
+  get   'vendors' => 'vendors#index', :as => :vendors
+  get   'vendors/:name' => 'vendors#show', :as => :vendor
   # post  'expected_revenue/:id/revenues' => 'revenues#create_from_expected_revenue', :as => :expected_revenue_revenues
 
   # The priority is based upon order of creation:

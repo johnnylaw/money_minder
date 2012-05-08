@@ -20,6 +20,17 @@ class VirtualAccountsController < ApplicationController
     render 'accounts/new'
   end
   
+  def create
+    @account = VirtualAccount.find_or_initialize_by_name(params[:virtual_account])
+    if @account.save
+      flash[:notice] = "Successfully created the `#{@account.name}` Virtual Account."
+      redirect_to accounts_path
+    else
+      flash[:error] = 'There were problems creating the new Virtual Account.'
+      render 'accounts/new'
+    end
+  end
+  
   private
   
   def jsonified_virtual_accounts

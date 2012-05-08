@@ -9,8 +9,8 @@ class VirtualAccount < ActiveRecord::Base
   has_many    :transfers_to,  :foreign_key => :account_to_id,   :class_name => 'VirtualTransfer'
   has_many    :transfers_from,:foreign_key => :account_from_id, :class_name => 'VirtualTransfer'
   
-  # default_scope order(:name)
-
+  validates   :primary_spending_account, :existing_record => true, :allow_nil => false
+  
   def balance
     Money.new(
       VirtualRevenue.to_account(self).sum(:cents) + VirtualTransfer.to_account(self).sum(:cents) -

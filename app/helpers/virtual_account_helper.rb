@@ -2,11 +2,12 @@ module VirtualAccountHelper
   def display_amount(trans, virtual_account_id = nil)
     if trans.respond_to?(:account_from_id)
       if virtual_account_id.nil? || trans.account_from_id == virtual_account_id
-        display_money(-trans.amount)
+        return display_money(-trans.amount)
       end
-    elsif trans.respond_to?(:account_to_id)
+    end
+    if trans.respond_to?(:account_to_id)
       if virtual_account_id.nil? || trans.account_to_id == virtual_account_id
-        display_money(trans.amount)
+        return display_money(trans.amount)
       end
     end
   end
