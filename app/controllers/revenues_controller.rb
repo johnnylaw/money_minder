@@ -13,7 +13,6 @@ class RevenuesController < ApplicationController
     @holding_accounts = Account.holding_accounts
     @customers = Customer.all
     @revenue = Revenue.new_from_expected_revenue(@expected_revenue)
-    # raise @expected_revenue.unused_virtual_accounts.inspect
   end
   
   def show
@@ -25,8 +24,20 @@ class RevenuesController < ApplicationController
   
   def create
     @revenue = Revenue.new(params[:revenue])
-    # @revenue.executed_at = Time.parse('2012-03-28 00:00:00') # put in as a momentary band-aid
-    @revenue.save
+    if @revenue.save
+      flash[:notice] = "Revenue transaction for $#{@revenue.amount} saved"
+      redirect_to accounts_path
+    else
+      flash[:error] = 'Could not save revenue transaction because of errors'
+      @holding_accounts = Account.holding_accounts
+      if @revenue.expected_revenue
+        @expected_revenue = @revenue.expected_revenue
+        render 'new'
+      else
+        @virtual_accounts = @revenue.virtual_revenues.map(&:account_to)
+        render 'new_from_expected_revenue'
+      end
+    end
   end
   
   def kick_out
