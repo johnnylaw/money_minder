@@ -29,8 +29,13 @@ MoneyMinder::Application.routes.draw do
   
   get   'vendors' => 'vendors#index', :as => :vendors
   get   'vendors/:name' => 'vendors#show', :as => :vendor
-  # post  'expected_revenue/:id/revenues' => 'revenues#create_from_expected_revenue', :as => :expected_revenue_revenues
 
+  get   'revenue_recipes' => 'revenue_recipes#index', :as => :revenue_recipes
+  get   'revenue_recipes/:id' => 'revenue_recipes#show', :as => :revenue_recipe
+  get   'revenue_recipes/:id/edit' => 'revenue_recipes#edit', :as => :revenue_recipe_edit
+  get   'revenue_recipes/new' => 'revenue_recipes#new', :as => :new_revenue_recipe
+  post  'revenue_recipes' => 'revenue_recipes#create'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
