@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120430010835) do
+ActiveRecord::Schema.define(:version => 20120508035941) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name",                                        :null => false
@@ -237,6 +237,7 @@ ActiveRecord::Schema.define(:version => 20120430010835) do
     t.datetime "executed_at"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.string   "memo"
   end
 
   add_index "virtual_transaction_template", ["executed_at"], :name => "index_virtual_transaction_template_on_executed_at"
@@ -245,8 +246,12 @@ ActiveRecord::Schema.define(:version => 20120430010835) do
     t.integer  "account_from_id", :null => false
     t.integer  "account_to_id",   :null => false
     t.integer  "cents",           :null => false
+    t.datetime "executed_at",     :null => false
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.string   "memo",            :null => false
   end
+
+  add_index "virtual_transfers", ["executed_at"], :name => "index_virtual_transfers_on_executed_at"
 
 end

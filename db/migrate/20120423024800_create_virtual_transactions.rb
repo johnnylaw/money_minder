@@ -4,7 +4,7 @@ class CreateVirtualTransactions < ActiveRecord::Migration
     :revenue_id       => [                                        :virtual_revenues],
     :account_from_id  => [:virtual_purchases, :virtual_transfers],
     :account_to_id    => [                    :virtual_transfers, :virtual_revenues],
-    :executed_at      => [            :transfers]
+    :executed_at      => [                    :virtual_transfers]
   }
   
   def table_has_column?(table, column)
