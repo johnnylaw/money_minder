@@ -54,6 +54,10 @@ module ActsAsTransactionRecipe
         result
       end
       
+      def self.schedule_all
+        all.map(&:schedule)
+      end
+      
       def virtual_portions=(arr)
         raise ArgumentError unless arr.is_a? Array
         arr.each do |arg|
