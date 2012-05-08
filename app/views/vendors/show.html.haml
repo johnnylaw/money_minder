@@ -1,0 +1,12 @@
+%h1
+  = @vendor.name
+  
+%table
+  %tr
+    %th Date
+    %th Amount
+
+  - @vendor.purchases.each do |trans|
+    %tr.transaction{ :class => cycle('odd', 'even') }
+      %td.date= trans.executed_at.strftime '%m/%d'
+      %td.amount= display_amount trans

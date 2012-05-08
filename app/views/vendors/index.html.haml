@@ -1,0 +1,7 @@
+%h1 Vendors
+
+%ul.vendors
+- @vendors.each do |vendor|
+  %li.vendor
+    = link_to vendor.name, vendor_path(vendor)
+  
