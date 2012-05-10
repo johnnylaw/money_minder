@@ -24,16 +24,23 @@ MoneyMinder::Application.routes.draw do
   get   'expected_revenues/:id/revenues/new' => 'revenues#new_from_expected_revenue', :as => :new_revenue_from_expected_revenue
 
   post  'revenues' => 'revenues#create', :as => :revenues
-  get   'revenues/:id'  => 'revenues#show', :as => :revenue
   get   'revenues/new' => 'revenues#new', :as => :new_revenue
+  get   'revenues/:id'  => 'revenues#show', :as => :revenue
   
   get   'vendors' => 'vendors#index', :as => :vendors
-  get   'vendors/:name' => 'vendors#show', :as => :vendor
+  get   'vendors/new' => 'vendors#new', :as => :new_vendor
+  get   'vendors/:name' => 'vendors#show', :as => :vendor, :name => /[^\/]+/
+  post  'vendors' => 'vendors#create'
 
+  get   'customers' => 'customers#index', :as => :customers
+  get   'customers/new' => 'customers#new', :as => :new_customer
+  get   'customers/:name' => 'customers#show', :as => :customer, :name => /[^\/]+/
+  post  'customers' => 'customers#create'
+  
   get   'revenue_recipes' => 'revenue_recipes#index', :as => :revenue_recipes
+  get   'revenue_recipes/new' => 'revenue_recipes#new', :as => :new_revenue_recipe
   get   'revenue_recipes/:id' => 'revenue_recipes#show', :as => :revenue_recipe
   get   'revenue_recipes/:id/edit' => 'revenue_recipes#edit', :as => :revenue_recipe_edit
-  get   'revenue_recipes/new' => 'revenue_recipes#new', :as => :new_revenue_recipe
   post  'revenue_recipes' => 'revenue_recipes#create'
   
   # The priority is based upon order of creation:

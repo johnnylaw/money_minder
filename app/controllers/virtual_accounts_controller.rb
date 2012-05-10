@@ -16,6 +16,7 @@ class VirtualAccountsController < ApplicationController
   
   def new
     @account = VirtualAccount.new
+    @spending_accounts = Account.spending_accounts
     
     render 'accounts/new'
   end
