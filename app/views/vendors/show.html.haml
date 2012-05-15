@@ -3,9 +3,12 @@
 %table
   %tr
     %th Date
+    %th{ :style => 'padding: 0 1em; text-align: left' } Memo
     %th Amount
 
   - @transactions.each do |trans|
     %tr.transaction{ :class => cycle('odd', 'even') }
       %td.date= trans.executed_at.strftime '%m/%d'
-      %td.amount= display_amount trans
+      %td.description{ :style => 'padding: 0 1em' }= trans.memo
+      %td.amount= display_amount(trans)
+      %td.from= display_account_name_to_and_or_from(trans)

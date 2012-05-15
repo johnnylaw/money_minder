@@ -20,6 +20,6 @@ class VendorsController < ApplicationController
   
   def show
     @outside_entity = Vendor.find_by_name(params[:name])
-    @transactions = @outside_entity.purchases
+    @transactions = @outside_entity.purchases.order('executed_at desc')
   end
 end
