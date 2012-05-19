@@ -48,6 +48,9 @@
 
 
 :javascript
+  function Currency(cents) {
+    this.dollars = parseFloat(cents) / 100;
+  }
   $(function () {
     $.get('#{expected_purchases_path}.json', function(json) {
       if(json.length) $('#expected_purchases').html('');
@@ -86,18 +89,30 @@
       });
     });
 
+    function Money(cents) {
+      this.dollars = parseFloat(cents) / 100;
+      this.toString = function() {
+          var str = '$' + this.dollars.toString();
+          str = str.replace(/^(\$[\d]*)$/, '$1.00');
+          if(this.dollars < 0) str = '(' + str + ')';
+          return str;
+      };
+      this.isNegative = function() { return this.dollars < 0; };
+    }
     $.get('#{virtual_accounts_path}.json', function(json) {
       if(json.length) $('#virtual_accounts').html('');
       else $('#virtual_accounts p.subtitle').html('There are no accounts to show.');
-      var link, name, subtitle, account_link;
+      var link, name, subtitle, account_link, balance, balanceSpan;
       $.each(json, function(i, acct) { 
-        link = $('<a>').addClass('icon').attr('href', acct['new_purchase_href']);
-        account_link = $('<a>').attr('href', acct['href']);
+        link = $('<a>').addClass('icon').attr('href', new_purchase_from_virtual_account_path(acct));
         name = $('<p>').addClass('label').html(acct['name']);
-        subtitle = $('<p>').addClass('subtitle').html('$' + acct['balance']);
+        balance = new Money(acct['balance']['cents']);
+        balanceSpan = $('<span>').html(balance.toString());
+        subtitle = $('<p>').addClass('subtitle');
+        balanceSpan.appendTo(subtitle);
+        if(balance.isNegative()) balanceSpan.addClass('negative');
         link.appendTo('#virtual_accounts');
-        account_link.appendTo(link);
-        name.appendTo(account_link);
+        name.appendTo(link);
         subtitle.appendTo(link);
       });
     });
