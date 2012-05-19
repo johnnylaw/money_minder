@@ -1,6 +1,7 @@
 class PurchasesController < ApplicationController
   
   def new
+    PurchaseRecipe.schedule_all
   end
   
   def show
