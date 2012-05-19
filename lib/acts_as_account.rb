@@ -43,7 +43,7 @@ module ActsAsAccount
   end
   
   def attributes
-    super.merge('balance' => balance)
+    super.merge('balance' => balance.dollars)
   end
   
   def to_json

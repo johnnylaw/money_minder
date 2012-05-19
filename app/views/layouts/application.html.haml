@@ -3,9 +3,9 @@
   %head
     %title MoneyMinder
     = stylesheet_link_tag "application", :media => "all"
-    %link{:href => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/themes/ui-lightness/jquery-ui.css", :rel => "stylesheet", :type => "text/css"}
+    = stylesheet_link_tag params[:controller], :media => "all"
     = javascript_include_tag "application"
-    %script{:src => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/jquery-ui.min.js"}
+    = javascript_include_tag params[:controller]
     = csrf_meta_tags
     %meta{ :name => "viewport", :content => 'width=device-width', 'initial-scale' => '1', 'maximum-scale' => '1', 'user-scalable' => '0' }
     = "<style>body{ width: 600px; margin: auto; }</style>".html_safe if @iphone.nil? 

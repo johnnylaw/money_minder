@@ -1,0 +1,18 @@
+<% routes = Rails.application.routes.routes.map{ |r| [r.name, r.path.spec.to_s] }.select{ |r| r.first }
+application_routes = routes.map{ |r| { 'name' => r.first, 'path' => r.last.sub('(.:format)', '') } } %>
+
+applicationRoutes = <%= application_routes.to_json %>
+
+<% application_routes.each do |route| %>
+   <% resource = nil %>
+   <% if route['path'].match(/\:[_a-z]+/) %>
+      <% resource = route['path'].sub(/^.*\:([_a-z]+).*$/, '\1') %>
+   <% end %>
+   <%= route['name']%>_path = function(<%= resource ? 'resource' : '' %>) {
+      var path = '<%= route['path'] %>';
+      <% if resource %>
+         path = path.replace(':<%= resource %>', resource['<%= resource %>']);
+      <% end %>
+      return path;
+   }
+<% end %>

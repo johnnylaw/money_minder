@@ -18,11 +18,7 @@ class VirtualAccount < ActiveRecord::Base
       self.initial_balance_in_cents
     )
   end
-  
-  # def to_param
-  #   name
-  # end
-  
+    
   def transactions
     [purchases, revenues, transfers_to, transfers_from].flatten.sort{ |x, y| y.executed_at <=> x.executed_at }
   end
