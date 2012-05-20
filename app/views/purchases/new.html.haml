@@ -94,6 +94,7 @@
       this.toString = function() {
           var str = '$' + this.dollars.toString();
           str = str.replace(/^(\$[\d]*)$/, '$1.00');
+          str = str.replace(/(\.[\d])$/, '$10');
           if(this.dollars < 0) str = '(' + str + ')';
           return str;
       };

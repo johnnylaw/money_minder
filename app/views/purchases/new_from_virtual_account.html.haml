@@ -1,5 +1,7 @@
+%style
+  h1 a { font-size: inherit; }
 %h1
-  == #{@virtual_account.name} 
+  = link_to @virtual_account.name, virtual_account_path(@virtual_account)
   = "(#{@expected_purchase.recipe.name})" if @expected_purchase
 %p== Virtual account balance: $#{@virtual_account.balance}
 
