@@ -4,6 +4,7 @@ MoneyMinder::Application.routes.draw do
   get   'purchases/new' => 'purchases#new', :as => :new_purchase
   get   'purchases/:id' => 'purchases#show', :as => :purchase
   
+  get   'transfers' => 'transfers#dash', :as => :transfers_dash
   get   'transfers/:id' => 'transfers#show', :as => :transfer
   get   'virtual_transfers/:id' => 'virtual_transfers#show', :as => :virtual_transfer
   
