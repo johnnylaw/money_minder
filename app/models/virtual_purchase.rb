@@ -8,6 +8,9 @@ class VirtualPurchase < ActiveRecord::Base
 
   scope     :from_account, lambda{ |acct| where(:account_from_id => acct.id) }
   
+  validates :cents, :numericality => { :greater_than => 0 }, 
+            :unless => proc{ |vp| vp.is_a? VirtualRefund }
+  
   def inside_account
     account_from
   end
