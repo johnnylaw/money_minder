@@ -60,10 +60,10 @@
         link = $('<a>').addClass('icon').attr('href', pur['new_purchase_url']);
         name = $('<p>').addClass('label').html(pur['name']);
         if(pur['is_promised']) {
-          due_phrase = 'Due ' + pur['due_in'];
+          due_phrase = 'Due ' + pur['due_in'] + ' - ' + pur['scheduled_on'];
           name.addClass(pur['status']);
         } else {
-          due_phrase = pur['due_in'];
+          due_phrase = pur['due_in'] + ' - ' + pur['scheduled_on'];
         }
         delete_button = $('<button>').attr('id', 'expected_purchase_dismiss_' + pur['id']).html('Dismiss');
         due_in = $('<span class="weak">').html('(' + due_phrase + ')');
