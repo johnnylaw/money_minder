@@ -1,4 +1,11 @@
 class Purchase < ActiveRecord::Base
+  class PresenceOfAssociatedValidator < ActiveModel::EachValidator
+    def validate_each(record, attribute, value)
+      record.errors.add attribute, (options[:message] || "must exist") unless
+        value.respond_to?(:any?) && value.any?
+    end
+  end
+  
   belongs_to  :vendor, :autosave => true, :validate => true
   belongs_to  :account_from, :class_name => 'Account'
   belongs_to  :expected_purchase
@@ -10,6 +17,8 @@ class Purchase < ActiveRecord::Base
   scope     :from_account, lambda{ |acct| where(:account_from_id => acct.id) }
   
   validates :vendor, :account_from, :existing_record => true, :allow_nil => false
+  validates :virtual_purchases, :presence_of_associated => true,
+            :unless => proc{ |p| p.is_a? Refund }
   
   def self.new_from_virtual_account_id(virtual_account_id)
     new_from_virtual_account(VirtualAccount.find_by_id(virtual_account_id))
