@@ -3,6 +3,7 @@
   %head
     %title MoneyMinder
     = stylesheet_link_tag "application", :media => "all"
+    = stylesheet_link_tag('iphone', :media => :screen) unless @iphone.nil?
     = stylesheet_link_tag params[:controller], :media => "all"
     = javascript_include_tag "application"
     = javascript_include_tag params[:controller]
@@ -14,4 +15,57 @@
     %p.notice= notice
     %p.alert= alert
     %p.error= flash[:error]
+    
+    %header
+      %nav
+        %ul
+          %li.transfers= link_to content_tag(:span, 'Transfers'), transfers_dash_path
+          %li.payments= link_to content_tag(:span, 'Purchases'), new_purchase_path
+          %li.revenues= link_to content_tag(:span, 'Revenues'), revenues_path
+          %li.vendors= link_to content_tag(:span, 'Vendors'), vendors_path
+          %li.customers= link_to content_tag(:span, 'Accounts'), accounts_path
+          
     = yield
+
+:css
+  header { 
+    height: 64px; 
+    background-color: black;
+    color: #dddddd;
+    width: 100%;
+    /*
+    position: fixed;
+    top: 400px; 
+    */
+  }
+  header nav ul { 
+    padding: 0; 
+    margin: 0; 
+  }
+  header nav ul li {
+    position: relative;
+    display: block;
+    width: 64px;
+    height: 64px;
+    float: left;
+    padding: 0;
+    margin: 0;
+    font-size: .85em;
+    text-align: center;
+    border-right: 1px solid #444444;
+  }
+  header nav ul li a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    color: inherit;
+  }
+  header nav ul li a span {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  header nav ul li a:hover {
+    background-color: black;
+  }
