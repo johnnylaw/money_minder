@@ -17,7 +17,7 @@ class ExpectedPurchasesController < ApplicationController
   private
   
   def jsonified_expected_purchases
-    @expected_purchases.map{ |pur| pur.attributes.merge(
+    @expected_purchases.select{ |p| p.current? }.map{ |pur| pur.attributes.merge(
       'due_in' => distance_of_time_in_words_until(pur.scheduled_on, pur.scheduled_for_hour),
       'status' => pur.status,
       'new_purchase_url' => new_purchase_from_expected_purchase_path(pur),

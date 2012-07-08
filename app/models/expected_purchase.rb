@@ -15,6 +15,10 @@ class ExpectedPurchase < ActiveRecord::Base
     recipe.is_promised? && outstanding? && Date.today > scheduled_on - 4.days && 'danger' || 'okay'
   end
   
+  def current?
+    scheduled_on + scheduled_for_hour.hours - recipe.current_as_of_hours_prior.hours < Time.now + 5.hours
+  end
+  
   def outstanding?
     !is_complete? && purchase.nil?
   end
