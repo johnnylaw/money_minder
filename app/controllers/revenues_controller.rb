@@ -1,4 +1,8 @@
 class RevenuesController < ApplicationController
+  def index
+    RevenueRecipe.schedule_all
+  end
+  
   def new
     @customers = Customer.all
     @holding_accounts = Account.holding_accounts
