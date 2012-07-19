@@ -48,9 +48,6 @@
 
 
 :javascript
-  function Currency(cents) {
-    this.dollars = parseFloat(cents) / 100;
-  }
   $(function () {
     $.get('#{expected_purchases_path}.json', function(json) {
       if(json.length) $('#expected_purchases').html('');
