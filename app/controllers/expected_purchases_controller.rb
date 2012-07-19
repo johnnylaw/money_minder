@@ -28,20 +28,5 @@ class ExpectedPurchasesController < ApplicationController
       'name' => pur.recipe.name, 'vendor_name' => pur.recipe.vendor_name, 
       'amount' => pur.recipe.amount
     ) }.to_json
-  end
-  
-  def distance_of_time_in_words_until(date, hour)
-    seconds = date.to_time + hour.hours - Time.now
-    #TODO: put this somewhere else and fixe the today/tomorrow/yesterday thing; not working at all
-    return 'today' if date == Date.today
-    return 'tomorrow' if date == Date.tomorrow
-    return 'yesterday' if date == Date.yesterday
-    words = ActionView::Base.new.distance_of_time_in_words(seconds).sub(/about /, '~')
-    if seconds < 0
-      return "#{words} ago"
-    else
-      return "in #{words}"
-    end
-  end
-  
+  end  
 end
