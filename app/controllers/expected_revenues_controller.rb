@@ -1,6 +1,6 @@
 class ExpectedRevenuesController < ApplicationController
   def index
-    @expected_revenues = ExpectedRevenue.outstanding.current
+    @expected_revenues = ExpectedRevenue.outstanding
     respond_to do |format|
       format.html {}
       format.json { render :json => jsonified_expected_revenues }

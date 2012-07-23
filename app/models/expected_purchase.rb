@@ -8,15 +8,19 @@ class ExpectedPurchase < ActiveRecord::Base
   scope :outstanding, joins('LEFT OUTER JOIN purchases p ON p.expected_purchase_id=expected_purchases.id').
                       where('p.expected_purchase_id is null').
                       where(:is_complete => false)
-  
+
   def status
     return 'completed' unless purchase.nil?
     return 'dismissed' if is_complete?
     recipe.is_promised? && outstanding? && Date.today > scheduled_on - 4.days && 'danger' || 'okay'
   end
   
+  def becomes_current_at
+    scheduled_on + scheduled_for_hour.hours - recipe.current_as_of_hours_prior.hours
+  end
+  
   def current?
-    scheduled_on + scheduled_for_hour.hours - recipe.current_as_of_hours_prior.hours < Time.now + 5.hours
+    becomes_current_at < Time.zone.now
   end
   
   def outstanding?

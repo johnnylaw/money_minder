@@ -22,9 +22,11 @@ MoneyMinder::Application.routes.draw do
   get     'expected_purchase/:id/purchase/new' => 'purchases#new_from_expected_purchase', :as => :new_purchase_from_expected_purchase
   delete  'expected_purchase/:id' => 'expected_purchases#dismiss', :as => :expected_purchase
 
+  get   'expected_revenues' => 'expected_revenues#index', :as => :expected_revenues
   get   'expected_revenues/:id/revenues/new' => 'revenues#new_from_expected_revenue', :as => :new_revenue_from_expected_revenue
 
   post  'revenues' => 'revenues#create', :as => :revenues
+  get   'revenues' => 'revenues#index'
   get   'revenues/new' => 'revenues#new', :as => :new_revenue
   get   'revenues/:id'  => 'revenues#show', :as => :revenue
   

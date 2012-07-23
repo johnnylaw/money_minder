@@ -9,6 +9,8 @@ class PurchaseRecipe < ActiveRecord::Base
   belongs_to  :vendor
   has_many    :virtual_portions, :class_name => 'PurchaseRecipeVirtualPortion'
   
+  scope :active, where(active: true)
+  
   validates   :vendor, :existing_record => true, :allow_nil => true
   
   def vendor_name

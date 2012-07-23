@@ -55,7 +55,7 @@ module ActsAsTransactionRecipe
       end
       
       def self.schedule_all
-        all.map(&:schedule)
+        active.map(&:schedule)
       end
       
       def virtual_portions=(arr)
