@@ -58,6 +58,8 @@ module ActsAsTransactionRecipe
         active.map(&:schedule)
       end
       
+      scope :active, where(active: true)
+      
       def virtual_portions=(arr)
         raise ArgumentError unless arr.is_a? Array
         arr.each do |arg|
