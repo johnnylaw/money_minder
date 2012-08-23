@@ -85,6 +85,9 @@ GEM
       net-ssh (>= 1.99.1)
     pg (0.13.2)
     polyglot (0.3.3)
+    rabl (0.7.1)
+      activesupport (>= 2.3.14)
+      multi_json (~> 1.0)
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -161,6 +164,7 @@ DEPENDENCIES
   jquery-rails
   money
   pg
+  rabl
   rails (= 3.2.1)
   rails3-generators
   rspec-rails

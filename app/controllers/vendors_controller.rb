@@ -1,6 +1,10 @@
 class VendorsController < ApplicationController
   def index
     @outside_entities = Vendor.all
+    respond_to do |format|
+      format.html {}
+      format.json { render 'index.rabl' }
+    end
   end
   
   def new
