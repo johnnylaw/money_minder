@@ -3,9 +3,7 @@ class VendorsController < ApplicationController
     @outside_entities = Vendor.all
     respond_to do |format|
       format.html {}
-      format.json {
-        render json: { vendors: @outside_entities.map(&:name) }
-      }
+      format.json { render 'index.rabl' }
     end
   end
   
