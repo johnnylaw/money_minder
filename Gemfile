@@ -25,6 +25,7 @@ end
 gem 'jquery-rails'
 gem 'rails3-generators'
 gem 'haml-rails'
+gem 'bcrypt-ruby'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -37,6 +38,8 @@ gem 'unicorn'
 
 # Deploy with Capistrano
 gem 'capistrano'
+gem 'rvm'
+gem 'rvm-capistrano'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
